@@ -1,0 +1,492 @@
+<style>
+    body {
+        background: linear-gradient(160deg, #e8f4fd 0%, #ffffff 50%, #e3f2fd 100%);
+        min-height: 100vh;
+    }
+
+    .weather-clear-day    { background: linear-gradient(135deg, #f7971e, #ffd200); color: #333; }
+    .weather-clouds-day   { background: linear-gradient(135deg, #606c88, #3f4c6b); color: #fff; }
+    .weather-rain-day     { background: linear-gradient(135deg, #1c3a5f, #4a90d9); color: #fff; }
+    .weather-snow-day     { background: linear-gradient(135deg, #83a4d4, #b6fbff); color: #333; }
+    .weather-thunder-day  { background: linear-gradient(135deg, #373b44, #4286f4); color: #fff; }
+    .weather-haze-day     { background: linear-gradient(135deg, #b8c6db, #f5f7fa); color: #333; }
+    .weather-default-day  { background: linear-gradient(135deg, #74ebd5, #acb6e5); color: #333; }
+
+    .weather-clear-night   { background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); color: #fff; }
+    .weather-clouds-night  { background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);  color: #fff; }
+    .weather-rain-night    { background: linear-gradient(135deg, #0d0d1a, #1a3a5c, #0a1628);  color: #fff; }
+    .weather-snow-night    { background: linear-gradient(135deg, #1a1a2e, #4a5568, #a0aec0);  color: #fff; }
+    .weather-thunder-night { background: linear-gradient(135deg, #0d0d0d, #1a1a2e, #2d2d44); color: #fff; }
+    .weather-haze-night    { background: linear-gradient(135deg, #2c3e50, #4a5568, #718096);  color: #fff; }
+    .weather-default-night { background: linear-gradient(135deg, #141e30, #243b55);           color: #fff; }
+
+    .weather-card {
+        border-radius: 24px;
+        border: none;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.18) !important;
+    }
+    .weather-card small { opacity: 0.85; }
+
+    .sun-strip {
+        background: rgba(255,255,255,0.15);
+        border-radius: 16px;
+        padding: 12px 20px;
+        margin-top: 16px;
+        display: flex;
+        justify-content: center;
+        gap: 48px;
+    }
+    .sun-item { text-align: center; }
+    .sun-item .sun-time { font-size: 1.2rem; font-weight: 700; display: block; }
+
+    .hourly-strip {
+        display: flex;
+        overflow-x: auto;
+        gap: 12px;
+        padding: 8px 4px 12px;
+        scrollbar-width: thin;
+        scrollbar-color: #ccc transparent;
+    }
+    .hourly-strip::-webkit-scrollbar       { height: 5px; }
+    .hourly-strip::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+
+    .hourly-item {
+        min-width: 80px;
+        background: #fff;
+        border-radius: 16px;
+        padding: 10px 8px;
+        text-align: center;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+        flex-shrink: 0;
+        transition: transform 0.2s;
+    }
+    .hourly-item:hover       { transform: translateY(-3px); }
+    .hourly-item .h-time     { font-size: 0.75rem; font-weight: 700; color: #555; }
+    .hourly-item .h-temp     { font-size: 1rem; font-weight: 800; color: #1a1a2e; }
+    .hourly-item img         { width: 44px; }
+
+    .forecast-strip {
+        display: flex;
+        gap: 10px;
+        overflow-x: auto;
+        padding-bottom: 8px;
+        scrollbar-width: thin;
+        scrollbar-color: #ccc transparent;
+    }
+    .forecast-strip::-webkit-scrollbar       { height: 5px; }
+    .forecast-strip::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+
+    .forecast-card {
+        min-width: 130px;
+        flex-shrink: 0;
+        border-radius: 16px;
+        border: none;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        transition: transform 0.2s;
+    }
+    .forecast-card:hover { transform: translateY(-4px); }
+
+    .recent-badge {
+        cursor: pointer;
+        font-size: 0.85rem;
+        padding: 5px 12px;
+        border-radius: 20px;
+        transition: all 0.2s;
+        display: inline-block;
+        margin-bottom: 4px;
+    }
+    .recent-badge:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+
+    .fav-badge {
+        cursor: pointer;
+        font-size: 0.85rem;
+        padding: 5px 12px;
+        border-radius: 20px;
+        background: #fff3cd;
+        color: #856404;
+        border: 1px solid #ffc107;
+        transition: all 0.2s;
+        display: inline-block;
+        margin-bottom: 4px;
+    }
+    .fav-badge:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+
+    .btn-location {
+        background: linear-gradient(135deg, #1a1a2e, #2d2d50);
+        border: none;
+        color: #fff;
+        border-radius: 12px;
+        padding: 10px 16px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        transition: all 0.2s;
+        cursor: pointer;
+        width: 100%;
+    }
+    .btn-location:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(105, 105, 105, 0.4); }
+
+    .btn-fav {
+        background: rgba(255,255,255,0.2);
+        border: 2px solid rgba(255,255,255,0.5);
+        color: inherit;
+        border-radius: 50px;
+        padding: 6px 20px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        transition: all 0.2s;
+        cursor: pointer;
+        width: 100%;
+    }
+    .btn-fav:hover { background: rgba(255,255,255,0.35); }
+    .btn-fav.saved { background: rgba(255,215,0,0.3); border-color: gold; }
+
+
+    .empty-state {
+        position: relative;
+        min-height: 340px;
+        background: linear-gradient(160deg, #e8f4fd 0%, #d0eaff 50%, #e3f2fd 100%);
+        border-radius: 28px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px;
+        margin-bottom: 24px;
+        box-shadow: 0 4px 24px rgba(79,172,254,0.12);
+    }
+
+    .es-sun {
+        position: absolute;
+        top: -30px;
+        right: -30px;
+        width: 160px;
+        height: 160px;
+        background: radial-gradient(circle, #ffd200 40%, rgba(255,210,0,0) 70%);
+        border-radius: 50%;
+        animation: pulse-sun 4s ease-in-out infinite;
+        opacity: 0.7;
+    }
+
+    @keyframes pulse-sun {
+        0%, 100% { transform: scale(1);   opacity: 0.7; }
+        50%       { transform: scale(1.1); opacity: 0.9; }
+    }
+
+    .es-cloud {
+        position: absolute;
+        background: #fff;
+        border-radius: 50px;
+        opacity: 0.85;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    }
+
+    .es-cloud::before,
+    .es-cloud::after {
+        content: '';
+        position: absolute;
+        background: #fff;
+        border-radius: 50%;
+    }
+
+    .es-cloud-1 {
+        width: 140px; height: 44px;
+        top: 40px; left: -160px;
+        animation: drift 18s linear infinite;
+    }
+    .es-cloud-1::before { width: 70px; height: 70px; top: -35px; left: 20px; }
+    .es-cloud-1::after  { width: 50px; height: 50px; top: -25px; left: 60px; }
+
+    .es-cloud-2 {
+        width: 100px; height: 32px;
+        top: 100px; left: -120px;
+        animation: drift 12s linear infinite 4s;
+        opacity: 0.7;
+    }
+    .es-cloud-2::before { width: 50px; height: 50px; top: -28px; left: 14px; }
+    .es-cloud-2::after  { width: 36px; height: 36px; top: -18px; left: 44px; }
+
+    .es-cloud-3 {
+        width: 80px; height: 26px;
+        top: 170px; left: -100px;
+        animation: drift 9s linear infinite 2s;
+        opacity: 0.6;
+    }
+    .es-cloud-3::before { width: 40px; height: 40px; top: -22px; left: 10px; }
+    .es-cloud-3::after  { width: 30px; height: 30px; top: -15px; left: 36px; }
+
+    .es-cloud-4 {
+        width: 60px; height: 20px;
+        top: 60px; left: -80px;
+        animation: drift 7s linear infinite 6s;
+        opacity: 0.5;
+    }
+    .es-cloud-4::before { width: 30px; height: 30px; top: -16px; left: 8px; }
+    .es-cloud-4::after  { width: 22px; height: 22px; top: -11px; left: 28px; }
+
+    @keyframes drift {
+        from { transform: translateX(0); }
+        to   { transform: translateX(calc(100vw + 200px)); }
+    }
+
+    .es-title {
+        font-size: 1.6rem;
+        font-weight: 800;
+        color: #1a1a2e;
+        margin-bottom: 8px;
+        position: relative;
+        z-index: 1;
+        text-align: center;
+    }
+
+    .es-subtitle {
+        font-size: 1rem;
+        color: #555;
+        position: relative;
+        z-index: 1;
+        text-align: center;
+    }
+
+    .es-emoji {
+        font-size: 4rem;
+        margin-bottom: 12px;
+        position: relative;
+        z-index: 1;
+        animation: float-icon 3s ease-in-out infinite;
+    }
+
+    @keyframes float-icon {
+        0%, 100% { transform: translateY(0); }
+        50%       { transform: translateY(-10px); }
+    }
+
+    .quick-cities {
+        position: relative;
+        z-index: 1;
+        margin-top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+    }
+
+    .city-pill {
+        background: rgba(255,255,255,0.8);
+        border: 1px solid rgba(79,172,254,0.3);
+        color: #1a1a2e;
+        border-radius: 50px;
+        padding: 6px 16px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        backdrop-filter: blur(4px);
+    }
+
+    .city-pill:hover {
+        background: linear-gradient(135deg, #4facfe, #00f2fe);
+        color: #fff;
+        border-color: transparent;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(79,172,254,0.3);
+    }
+
+    @media (max-width: 576px) {
+        .weather-card     { border-radius: 18px; padding: 20px 14px !important; }
+        .weather-card h3  { font-size: 1.3rem; }
+        .weather-card .fs-3 { font-size: 1.5rem !important; }
+        .weather-card .fs-5 { font-size: 1rem !important; }
+        .sun-strip        { gap: 24px; padding: 10px 12px; }
+        .sun-item .sun-time { font-size: 1rem; }
+        .hourly-item      { min-width: 68px; padding: 8px 4px; }
+        .hourly-item img  { width: 36px; }
+        .forecast-card    { min-width: 110px; }
+        .btn-fav          { width: 100%; }
+        .page-title       { font-size: 1.4rem !important; }
+        .empty-state      { min-height: 260px; border-radius: 18px; }
+        .es-title         { font-size: 1.2rem; }
+        .es-emoji         { font-size: 3rem; }
+    }
+
+    @media (max-width: 768px) {
+        .weather-card .fs-3 { font-size: 1.8rem !important; }
+        .sun-strip          { gap: 32px; }
+    }
+</style>
+
+<div class="container mt-4 mt-md-5 weather-container px-3" style="max-width: 800px;">
+    <h2 class="mb-4 text-center page-title">🌤️ WeatherNow</h2>
+
+    <form method="POST" action="/weather" id="weatherForm">
+        <div class="input-group mb-2">
+            <input
+                type="text"
+                name="city"
+                id="cityInput"
+                class="form-control form-control-lg"
+                placeholder="Enter city name (e.g. Mumbai)"
+                required
+            />
+            <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+    </form>
+
+    <div class="mb-3">
+        <button class="btn-location" onclick="getLocation()">📍 Use My Location</button>
+    </div>
+
+    {{#if recentSearches.length}}
+        <div class="mb-2">
+            <small class="text-muted fw-bold">Recent: </small>
+            {{#each recentSearches}}
+                <span class="badge bg-secondary recent-badge me-1"
+                    onclick="document.getElementById('cityInput').value='{{this.city}}'; document.getElementById('weatherForm').submit();">
+                    {{this.city}}
+                </span>
+            {{/each}}
+        </div>
+    {{/if}}
+
+    {{#if favourites.length}}
+        <div class="mb-4">
+            <small class="text-muted fw-bold">⭐ Favourites: </small>
+            {{#each favourites}}
+                <span class="fav-badge me-1"
+                    onclick="document.getElementById('cityInput').value='{{this.city}}'; document.getElementById('weatherForm').submit();">
+                    ⭐ {{this.city}}
+                </span>
+            {{/each}}
+        </div>
+    {{/if}}
+
+    {{#if error}}
+        <div class="alert alert-danger text-center">{{error}}</div>
+    {{/if}}
+
+    {{#if weather}}
+        <div class="card shadow text-center p-4 mb-4 weather-card {{bgClass}}">
+            <h3 class="card-title fw-bold">{{weather.city}}, {{weather.country}}</h3>
+            <img src="https://openweathermap.org/img/wn/{{weather.icon}}@2x.png"
+                 alt="{{weather.description}}" class="mx-auto" style="width:100px;" />
+            <p class="text-capitalize fs-5 mb-3">{{weather.description}}</p>
+
+            <div class="row mt-2 text-center">
+                <div class="col-6 col-md-3 mb-3">
+                    <div class="fw-bold fs-3">{{weather.temp}}°C</div>
+                    <small>🌡️ Temperature</small>
+                </div>
+                <div class="col-6 col-md-3 mb-3">
+                    <div class="fw-bold fs-3">{{weather.feels_like}}°C</div>
+                    <small>🤔 Feels Like</small>
+                </div>
+                <div class="col-6 col-md-3 mb-3">
+                    <div class="fw-bold fs-3">{{weather.humidity}}%</div>
+                    <small>💧 Humidity</small>
+                </div>
+                <div class="col-6 col-md-3 mb-3">
+                    <div class="fw-bold fs-3">{{weather.wind}}</div>
+                    <small>💨 Wind m/s</small>
+                </div>
+            </div>
+
+            <div class="sun-strip">
+                <div class="sun-item">
+                    <span class="sun-time">🌅 {{weather.sunrise}}</span>
+                    <small>Sunrise</small>
+                </div>
+                <div class="sun-item">
+                    <span class="sun-time">🌇 {{weather.sunset}}</span>
+                    <small>Sunset</small>
+                </div>
+            </div>
+
+            <div class="mt-3">
+                {{#if isFavourite}}
+                    <form method="POST" action="/weather/unfavourite" style="display:inline; width:100%">
+                        <input type="hidden" name="city" value="{{weather.city}}" />
+                        <button type="submit" class="btn-fav saved">⭐ Saved to Favourites</button>
+                    </form>
+                {{else}}
+                    <form method="POST" action="/weather/favourite" style="display:inline; width:100%">
+                        <input type="hidden" name="city" value="{{weather.city}}" />
+                        <button type="submit" class="btn-fav">☆ Save to Favourites</button>
+                    </form>
+                {{/if}}
+            </div>
+        </div>
+
+        {{#if hourly}}
+            <h5 class="mb-3">Next 24 Hours</h5>
+            <div class="hourly-strip mb-4">
+                {{#each hourly}}
+                    <div class="hourly-item">
+                        <div class="h-time">{{this.time}}</div>
+                        <img src="https://openweathermap.org/img/wn/{{this.icon}}@2x.png" alt="{{this.description}}" />
+                        <div class="h-temp">{{this.temp}}°C</div>
+                    </div>
+                {{/each}}
+            </div>
+        {{/if}}
+
+        {{#if forecast}}
+            <h5 class="mb-3">5-Day Forecast</h5>
+            <div class="forecast-strip mb-4">
+                {{#each forecast}}
+                    <div class="card text-center p-2 forecast-card">
+                        <small class="fw-bold text-muted">{{this.date}}</small>
+                        <img src="https://openweathermap.org/img/wn/{{this.icon}}@2x.png"
+                             alt="{{this.description}}" class="mx-auto" style="width:55px;" />
+                        <div class="fw-bold fs-6">{{this.temp}}°C</div>
+                        <small class="text-capitalize text-muted" style="font-size:0.7rem;">{{this.description}}</small>
+                        <small class="text-muted">💧 {{this.humidity}}%</small>
+                    </div>
+                {{/each}}
+            </div>
+        {{/if}}
+
+    {{else}}
+
+        <div class="empty-state">
+            <div class="es-sun"></div>
+
+            <div class="es-cloud es-cloud-1"></div>
+            <div class="es-cloud es-cloud-2"></div>
+            <div class="es-cloud es-cloud-3"></div>
+            <div class="es-cloud es-cloud-4"></div>
+
+            <div class="es-emoji">⛅</div>
+            <div class="es-title">What's the weather like?</div>
+            <div class="es-subtitle">Search any city or use your location to get started</div>
+
+            <div class="quick-cities">
+                <span class="city-pill" onclick="searchCity('Mumbai')">🏙️ Mumbai</span>
+                <span class="city-pill" onclick="searchCity('Delhi')">🕌 Delhi</span>
+                <span class="city-pill" onclick="searchCity('Bangalore')">🌿 Bangalore</span>
+                <span class="city-pill" onclick="searchCity('Chennai')">🌊 Chennai</span>
+                <span class="city-pill" onclick="searchCity('Kolkata')">🎨 Kolkata</span>
+                <span class="city-pill" onclick="searchCity('Hyderabad')">💎 Hyderabad</span>
+            </div>
+        </div>
+
+    {{/if}}
+</div>
+
+<script>
+    function getLocation() {
+        if (!navigator.geolocation) {
+            alert('Geolocation is not supported by your browser.');
+            return;
+        }
+        navigator.geolocation.getCurrentPosition(
+            (pos) => {
+                window.location.href = `/weather/location?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}`;
+            },
+            () => alert('Unable to get your location. Please allow location access.')
+        );
+    }
+
+    function searchCity(city) {
+        document.getElementById('cityInput').value = city;
+        document.getElementById('weatherForm').submit();
+    }
+</script>

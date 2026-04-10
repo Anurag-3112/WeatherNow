@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" name="author" content="Anurag Kumar">
+    <meta name="description" content="WeatherNow - A real-time weather app built by Anurag Kumar using OpenWeatherMap API">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>WeatherNow</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        .navbar {
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+            padding: 12px 0;
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: #1a1a2e !important;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: #444 !important;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: #4facfe !important;
+        }
+
+        .site-footer {
+            text-align: center;
+            padding: 24px 16px;
+            color: #999;
+            font-size: 0.85rem;
+            border-top: 1px solid #eee;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 576px) {
+            .navbar-brand {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg bg-white">
+        <div class="container">
+            <a class="navbar-brand" href="/" title="Built by Anurag Kumar">⛅ WeatherNow</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/weather">Weather</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    {{{body}}}
+
+    <footer class="site-footer">
+        <p style="margin: 0;">
+            ⛅ WeatherNow — Powered by OpenWeatherMap API
+        </p>
+        <p style="margin: 5px 0 0;">
+            Built by <strong>Anurag Kumar</strong> •
+            {{!-- <a href="https://your-portfolio-link.com" target="_blank">Portfolio</a> | --}}
+            <a href="https://github.com/Anurag-3112" target="_blank">GitHub</a> |
+            <a href="https://linkedin.com/in/anurag-kumar-work" target="_blank">LinkedIn</a>
+        </p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,232 @@
+<style>
+    body {
+        background: linear-gradient(160deg, #e8f4fd 0%, #ffffff 50%, #e3f2fd 100%);
+        min-height: 100vh;
+    }
+
+    .hero-section {
+        padding: 80px 0 60px;
+        text-align: center;
+    }
+
+    .hero-emoji {
+        font-size: 5rem;
+        display: block;
+        margin-bottom: 20px;
+        animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50%       { transform: translateY(-12px); }
+    }
+
+    .hero-title {
+        font-size: 3rem;
+        font-weight: 800;
+        color: #1a1a2e;
+        margin-bottom: 16px;
+        line-height: 1.2;
+    }
+
+    .hero-subtitle {
+        font-size: 1.2rem;
+        color: #555;
+        max-width: 520px;
+        margin: 0 auto 36px;
+        line-height: 1.7;
+    }
+
+    .btn-get-started {
+        background: rgb(12, 12, 12);
+        border: none;
+        color: #fff;
+        font-size: 1.1rem;
+        font-weight: 600;
+        padding: 14px 40px;
+        border-radius: 50px;
+        box-shadow: 0 8px 24px rgba(255, 255, 255, 0.4);
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-get-started:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 32px rgba(83, 83, 83, 0.5);  
+        color: #fff;
+    }
+
+    .features-section { padding: 60px 0; }
+
+    .features-title {
+        text-align: center;
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #1a1a2e;
+        margin-bottom: 10px;
+    }
+
+    .features-subtitle {
+        text-align: center;
+        color: #777;
+        margin-bottom: 48px;
+    }
+
+    .feature-card {
+        background: #fff;
+        border-radius: 20px;
+        border: none;
+        padding: 32px 24px;
+        text-align: center;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+        transition: transform 0.3s, box-shadow 0.3s;
+        height: 100%;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+    }
+
+    .feature-icon { font-size: 2.8rem; margin-bottom: 16px; display: block; }
+
+    .feature-card h5 { font-weight: 700; color: #1a1a2e; margin-bottom: 10px; }
+
+    .feature-card p { color: #777; font-size: 0.95rem; line-height: 1.6; margin: 0; }
+
+    .stats-section {
+        background: rgb(17, 17, 17);
+        border-radius: 24px;
+        padding: 48px 32px;
+        margin: 40px 0;
+        color: #fff;
+        text-align: center;
+    }
+
+    .stat-number { font-size: 2.5rem; font-weight: 800; display: block; }
+    .stat-label  { font-size: 0.95rem; opacity: 0.9; }
+
+    .cta-section { text-align: center; padding: 60px 0 80px; }
+    .cta-section h3 { font-size: 2rem; font-weight: 700; color: #1a1a2e; margin-bottom: 12px; }
+    .cta-section p  { color: #777; margin-bottom: 32px; }
+
+
+    @media (max-width: 576px) {
+
+        .hero-section { padding: 48px 0 36px; }
+        .hero-emoji   { font-size: 3.5rem; }
+        .hero-title   { font-size: 1.9rem; }
+        .hero-subtitle{ font-size: 1rem; padding: 0 8px; }
+        .btn-get-started { font-size: 1rem; padding: 12px 28px; }
+
+        .features-section { padding: 36px 0; }
+        .features-title   { font-size: 1.4rem; }
+        .feature-card     { padding: 24px 16px; }
+        .feature-icon     { font-size: 2.2rem; }
+
+        .stats-section  { padding: 32px 16px; border-radius: 16px; }
+        .stat-number    { font-size: 1.8rem; }
+        .stat-label     { font-size: 0.8rem; }
+
+        .cta-section    { padding: 36px 0 48px; }
+        .cta-section h3 { font-size: 1.5rem; }
+    }
+
+
+    @media (max-width: 768px) {
+        .hero-title    { font-size: 2.2rem; }
+        .hero-subtitle { font-size: 1.05rem; }
+    }
+</style>
+
+<div class="hero-section">
+    <div class="container px-3">
+        <span class="hero-emoji">⛅</span>
+        <h1 class="hero-title">Know Your Weather,<br>Plan Your Day</h1>
+        <p class="hero-subtitle">
+            Real-time weather updates, 5-day forecasts, and beautiful visuals —
+            all in one place. Stay ahead of the weather, always.
+        </p>
+        <a href="/weather" class="btn-get-started">Get Started →</a>
+    </div>
+</div>
+
+<div class="features-section">
+    <div class="container px-3">
+        <h2 class="features-title">Everything you need</h2>
+        <p class="features-subtitle">Simple, fast, and accurate weather at your fingertips</p>
+
+        <div class="row g-4">
+            <div class="col-12 col-sm-6 col-md-4">
+                <div class="feature-card">
+                    <span class="feature-icon">🌡️</span>
+                    <h5>Real-Time Weather</h5>
+                    <p>Get instant current weather for any city — temperature, humidity, wind speed and more.</p>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4">
+                <div class="feature-card">
+                    <span class="feature-icon">📅</span>
+                    <h5>5-Day Forecast</h5>
+                    <p>Plan your week with a detailed 5-day forecast so you're never caught off guard.</p>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4">
+                <div class="feature-card">
+                    <span class="feature-icon">🌙</span>
+                    <h5>Day & Night Themes</h5>
+                    <p>Beautiful dynamic backgrounds that change based on time of day and weather conditions.</p>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4">
+                <div class="feature-card">
+                    <span class="feature-icon"></span>
+                    <h5>Search History</h5>
+                    <p>Recent searches saved automatically so you can quickly check your favourite cities.</p>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4">
+                <div class="feature-card">
+                    <span class="feature-icon">🌍</span>
+                    <h5>Any City Worldwide</h5>
+                    <p>Search weather for any city across the globe — from Mumbai to New York to Tokyo.</p>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4">
+                <div class="feature-card">
+                    <span class="feature-icon">⚡</span>
+                    <h5>Lightning Fast</h5>
+                    <p>Powered by OpenWeatherMap API — results load instantly with up-to-date data.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container px-3">
+    <div class="stats-section">
+        <div class="row">
+            <div class="col-4">
+                <span class="stat-number">200+</span>
+                <span class="stat-label">Countries</span>
+            </div>
+            <div class="col-4">
+                <span class="stat-number">5</span>
+                <span class="stat-label">Days Forecast</span>
+            </div>
+            <div class="col-4">
+                <span class="stat-number">24/7</span>
+                <span class="stat-label">Live Updates</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="cta-section">
+    <div class="container px-3">
+        <h3>Ready to check the weather?</h3>
+        <p>Search any city and get instant results right now.</p>
+        <a href="/weather" class="btn-get-started">Check Weather Now →</a>
+    </div>
+</div>
