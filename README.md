@@ -2,7 +2,7 @@
 
 A full-stack weather application built with **Node.js**, **Express.js**, **Handlebars**, and **MongoDB** — featuring real-time weather data, dynamic themes, and a clean responsive UI.
 
-🌐 **Live Demo:** [weathernow-7il3.onrender.com](https://weathernow-7il3.onrender.com/weather?saved=Ashta)
+🌐 **Live Demo:** [weathernow](https://weathernow-7il3.onrender.com/)
 
 ---
 
