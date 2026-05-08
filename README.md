@@ -10,6 +10,18 @@ A full-stack weather application built with **Node.js**, **Express.js**, **Handl
 
 > Search any city and get instant weather with beautiful day/night themes, hourly forecast, and 5-day predictions.
 
+<p align="center">
+  <img src="assets/image1.png" width="100%" alt="weathernow Screenshot 1"/>
+</p>
+
+<p align="center">
+  <img src="assets/image2.png" width="100%" alt="weathernow Screenshot 2"/>
+</p>
+
+<p align="center">
+  <img src="assets/image3.png" width="100%" alt="weathernow Screenshot 2"/>
+</p>
+
 ---
 
 ## Features
